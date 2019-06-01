@@ -1,0 +1,49 @@
+CXX = x86_64-w64-mingw32-g++
+SDL_LIB = -lmingw32 -L/usr/lib -lSDL2 -lSDL2_image -lSDL2_ttf -static-libstdc++
+SDL_INCLUDE = -I/usr/include/SDL2
+CXX_FLAGS = -Werror -pedantic-errors -O0 -Wno-padded -std=c++11 $(SDL_INCLUDE)
+LINKER_FLAGS = $(SDL_LIB)
+
+
+all: sketch_1
+
+sketch_1.o: sketch_1.cpp
+	$(CXX) $(CXX_FLAGS) -c sketch_1.cpp
+
+sprite.o: sprite.h sprite.cpp
+	$(CXX) $(CXX_FLAGS) -c sprite.cpp
+
+sprite_layer.o: sprite_layer.h sprite_layer.cpp
+	$(CXX) $(CXX_FLAGS) -c sprite_layer.cpp
+
+background.o: background.h background.cpp
+	$(CXX) $(CXX_FLAGS) -c background.cpp
+
+character.o: character.h character.cpp
+	$(CXX) $(CXX_FLAGS) -c character.cpp
+
+conversation.o: conversation.h conversation.cpp
+	$(CXX) $(CXX_FLAGS) -c conversation.cpp
+
+scene.o: scene.h scene.cpp
+	$(CXX) $(CXX_FLAGS) -c scene.cpp
+
+game.o: game.h game.cpp
+	$(CXX) $(CXX_FLAGS) -c game.cpp
+
+script.o: script.h script.cpp
+	$(CXX) $(CXX_FLAGS) -c script.cpp
+
+sceneJunction.o: sceneJunction.h sceneJunction.cpp
+	$(CXX) $(CXX_FLAGS) -c sceneJunction.cpp
+
+easy_sdl.o: easy_sdl.h easy_sdl.cpp
+	$(CXX) $(CXX_FLAGS) -c easy_sdl.cpp
+
+sketch_1: sketch_1.o sprite.o sprite_layer.o background.o character.o conversation.o scene.o game.o script.o sceneJunction.o easy_sdl.o
+	$(CXX) $(LINKER_FLAGS) -o sketch_1 sketch_1.o background.o sprite_layer.o character.o conversation.o scene.o sprite.o game.o script.o sceneJunction.o easy_sdl.o  
+
+clean:
+	rm *.o && rm sketch_1
+build_windows:
+	cp *.o builds/windows/ && cp sketch_1 builds/windows/ && cp *.ttf builds/windows/ && cp *.txt builds/windows

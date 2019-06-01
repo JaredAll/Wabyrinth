@@ -1,0 +1,3 @@
+#ifdef __USE_MISC
+typedef unsigned int uint;
+#endif
